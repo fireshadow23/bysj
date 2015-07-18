@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "登录页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["login"]);
+        });
+    </script>
+}

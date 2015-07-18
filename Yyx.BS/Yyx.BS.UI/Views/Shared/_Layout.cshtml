@@ -1,0 +1,34 @@
+﻿@using Yyx.BS.Utils;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 8]> <html class="ie67"> <![endif]-->
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="edge" />
+    <meta name="renderer" content="webkit" />@*默认用急速内核*@
+    @*<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=2.0">*@
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>O2O电子商务平台</title>
+    <meta name="keywords" content="O2O电子商务平台" />
+    <meta name="description" content="O2O电子商务平台-Yyx毕业设计" />
+    <meta name="baidu-site-verification" content="i2opbfihJN" />
+    <script type="text/javascript">
+        var _v = "@ConfigHelper.GetVersion()";
+        var commonjs = "/js/common.js?v=" + _v;
+    </script>
+    <link rel="stylesheet" href="/css/style.css?v=@ConfigHelper.GetVersion()" />
+    <link rel="stylesheet" type="text/css" href="/css/jquery.datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/js/lib/jquery.layer/skin/layer.css" />
+    <link rel="stylesheet" type="text/css" href="/js/lib/jquery.layer/skin/layer.ext.css" />
+
+    <script type="text/javascript" src="~/js/lib/require-2.1.14.js"></script>
+
+    @RenderSection("header", required: false)
+</head>
+<body>
+    <!-- 主体 start-->
+    <div class="hidePart">
+        @RenderBody()
+    </div>
+    <!-- 主体 end -->
+</body>
+</html>
