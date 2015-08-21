@@ -12,6 +12,12 @@ namespace Yyx.BS.Library.Services
     {
         public BSDATAEntities db = new BSDATAEntities();
 
+        /// <summary>
+        /// 获取表ID
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public string SetID<T>(T t)
         {
             string id = string.Empty;

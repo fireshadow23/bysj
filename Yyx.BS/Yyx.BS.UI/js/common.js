@@ -14,9 +14,8 @@ requirejs.config({
         app: 'app',
 
         //***** lib *** //
-        jquery: staticUrl + 'lib/jquery-1.8.2',
-        jqpaging: staticUrl + "lib/jquery.pagination",
-
+        jquery: staticUrl + 'lib/jquery-1.9.1',
+        
         //mustache
         mustache: staticUrl + 'lib/mustache/mustache',
         lui: staticUrl + 'lib/mustache/lui',
@@ -26,18 +25,21 @@ requirejs.config({
         layerExt: staticUrl + 'lib/jquery.layer/extend/layer.ext',
 
         //jquery
+        jqpaging: staticUrl + "lib/jquery/jquery.pagination",
         jqdatetimepicker: staticUrl + 'lib/jquery/jquery.datetimepicker',
         jqform: staticUrl + 'lib/jquery/jquery.form',
         jqregx: staticUrl + 'lib/jquery/jquery.regx',
         jqcookie: staticUrl + 'lib/jquery/jquery.cookie',
 
+        //bootstrap
+        bootstrap: staticUrl + 'lib/bootstrap/bootstrap',
 
         //***** app *** //
         //common: staticUrl + 'app/common',
 
 
         //***** utils *** //
-        tmpconfig: staticUrl + 'utils/tmpconfig',
+        tmpconfig: staticUrl + 'utils/tmpconfig'
 
     },
     bundles: {
@@ -67,6 +69,9 @@ requirejs.config({
             deps: ['jquery'],
             exports: 'layer'
         },
+        bootstrap: {
+            deps: ['jquery']
+        },
         xyjconfig: {
             deps: ['jquery']
         }
@@ -89,4 +94,4 @@ requirejs.onError = function (err) {
     //   throw err;
 };
 
-require(['common'])
+require(['common'])   

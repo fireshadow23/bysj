@@ -16,12 +16,10 @@ namespace Yyx.BS.Models
     {
         public string OrderItemID { get; set; }
         public string OrderID { get; set; }
-        public string StoreID { get; set; }
         public string ProductID { get; set; }
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public decimal ActualAmount { get; set; }
-        public string PayStatusID { get; set; }
         public bool DelStatus { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime UpdatDate { get; set; }

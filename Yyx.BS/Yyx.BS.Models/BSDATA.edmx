@@ -42,6 +42,7 @@
           <Property Name="OrderNo" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="UserAddressID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="StoreID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="OrderAmount" Type="money" />
           <Property Name="ActualAmount" Type="money" Nullable="false" />
           <Property Name="PaymentAmount" Type="money" Nullable="false" />
@@ -59,9 +60,8 @@
           </Key>
           <Property Name="OrderBookID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="UserAddressID" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="StoreID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="ProductID" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Amount" Type="money" />
           <Property Name="ActualAmount" Type="money" Nullable="false" />
           <Property Name="OrderMemo" Type="nvarchar" MaxLength="100" />
@@ -87,12 +87,10 @@
           </Key>
           <Property Name="OrderItemID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="OrderID" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="StoreID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="ProductID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="10" Scale="2" />
           <Property Name="Amount" Type="money" />
           <Property Name="ActualAmount" Type="money" Nullable="false" />
-          <Property Name="PayStatusID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="DelStatus" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatDate" Type="datetime" Nullable="false" />
@@ -514,82 +512,6 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Account" Relationship="Self.FK_Balance_Account" FromRole="Balance" ToRole="Account" />
         </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderID" />
-          </Key>
-          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserAddressID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderAmount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ActualAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PaymentAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="OrderStatusID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PayStatusID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderMemo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceDate" Type="DateTime" Precision="3" />
-          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="OrderStatus" Relationship="Self.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatus" />
-          <NavigationProperty Name="OrderComment" Relationship="Self.FK_OrderComment_Order" FromRole="Order" ToRole="OrderComment" />
-          <NavigationProperty Name="OrderItem" Relationship="Self.FK_OrderItem_Order" FromRole="Order" ToRole="OrderItem" />
-        </EntityType>
-        <EntityType Name="OrderBook">
-          <Key>
-            <PropertyRef Name="OrderBookID" />
-          </Key>
-          <Property Name="OrderBookID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserAddressID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StoreID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ActualAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="OrderMemo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceDate" Type="DateTime" Precision="3" />
-          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="OrderComment">
-          <Key>
-            <PropertyRef Name="OrderCommentID" />
-          </Key>
-          <Property Name="OrderCommentID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CommentContent" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderComment_Order" FromRole="OrderComment" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="OrderItem">
-          <Key>
-            <PropertyRef Name="OrderItemID" />
-          </Key>
-          <Property Name="OrderItemID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StoreID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="ActualAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PayStatusID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_OrderItem_Order" FromRole="OrderItem" ToRole="Order" />
-        </EntityType>
-        <EntityType Name="OrderStatus">
-          <Key>
-            <PropertyRef Name="OrderStatusID" />
-          </Key>
-          <Property Name="OrderStatusID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="OrderStatusDefCN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_OrderStatus" FromRole="OrderStatus" ToRole="Order" />
-        </EntityType>
         <EntityType Name="Payment">
           <Key>
             <PropertyRef Name="PaymentID" />
@@ -764,42 +686,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_OrderStatus">
-          <End Role="OrderStatus" Type="Self.OrderStatus" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderStatus">
-              <PropertyRef Name="OrderStatusID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="OrderStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderComment_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="1" />
-          <End Role="OrderComment" Type="Self.OrderComment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="OrderComment">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_OrderItem_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="1" />
-          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="OrderItem">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Payment_PaymentType">
           <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
           <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
@@ -876,11 +762,6 @@
           <EntitySet Name="Account" EntityType="Self.Account" />
           <EntitySet Name="AddressLibrary" EntityType="Self.AddressLibrary" />
           <EntitySet Name="Balance" EntityType="Self.Balance" />
-          <EntitySet Name="Order" EntityType="Self.Order" />
-          <EntitySet Name="OrderBook" EntityType="Self.OrderBook" />
-          <EntitySet Name="OrderComment" EntityType="Self.OrderComment" />
-          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" />
-          <EntitySet Name="OrderStatus" EntityType="Self.OrderStatus" />
           <EntitySet Name="Payment" EntityType="Self.Payment" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" />
           <EntitySet Name="PayStatus" EntityType="Self.PayStatus" />
@@ -901,18 +782,6 @@
           <AssociationSet Name="FK_User_Account" Association="Self.FK_User_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_OrderStatus" Association="Self.FK_Order_OrderStatus">
-            <End Role="OrderStatus" EntitySet="OrderStatus" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderComment_Order" Association="Self.FK_OrderComment_Order">
-            <End Role="Order" EntitySet="Order" />
-            <End Role="OrderComment" EntitySet="OrderComment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderItem_Order" Association="Self.FK_OrderItem_Order">
-            <End Role="Order" EntitySet="Order" />
-            <End Role="OrderItem" EntitySet="OrderItem" />
           </AssociationSet>
           <AssociationSet Name="FK_Payment_PaymentType" Association="Self.FK_Payment_PaymentType">
             <End Role="PaymentType" EntitySet="PaymentType" />
@@ -944,6 +813,23 @@
             <End Role="StoreOperator" EntitySet="StoreOperator" />
           </AssociationSet>
           <EntitySet Name="Seq" EntityType="BSDATAModel.Seq" />
+          <EntitySet Name="Order" EntityType="BSDATAModel.Order" />
+          <EntitySet Name="OrderBook" EntityType="BSDATAModel.OrderBook" />
+          <EntitySet Name="OrderComment" EntityType="BSDATAModel.OrderComment" />
+          <EntitySet Name="OrderItem" EntityType="BSDATAModel.OrderItem" />
+          <EntitySet Name="OrderStatus" EntityType="BSDATAModel.OrderStatus" />
+          <AssociationSet Name="FK_Order_OrderStatus" Association="BSDATAModel.FK_Order_OrderStatus">
+            <End Role="OrderStatus" EntitySet="OrderStatus" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderComment_Order" Association="BSDATAModel.FK_OrderComment_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderComment" EntitySet="OrderComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_Order" Association="BSDATAModel.FK_OrderItem_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StoreOperator">
           <Key>
@@ -979,6 +865,116 @@
           <Property Name="ObjectParm1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CurrentValue" Type="Int64" Nullable="false" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserAddressID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="StoreID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ActualAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PaymentAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OrderStatusID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PayStatusID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderMemo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceDate" Type="DateTime" Precision="3" />
+          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="OrderStatus" Relationship="BSDATAModel.FK_Order_OrderStatus" FromRole="Order" ToRole="OrderStatus" />
+          <NavigationProperty Name="OrderComment" Relationship="BSDATAModel.FK_OrderComment_Order" FromRole="Order" ToRole="OrderComment" />
+          <NavigationProperty Name="OrderItem" Relationship="BSDATAModel.FK_OrderItem_Order" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <EntityType Name="OrderBook">
+          <Key>
+            <PropertyRef Name="OrderBookID" />
+          </Key>
+          <Property Name="OrderBookID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ActualAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="OrderMemo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceDate" Type="DateTime" Precision="3" />
+          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="OrderComment">
+          <Key>
+            <PropertyRef Name="OrderCommentID" />
+          </Key>
+          <Property Name="OrderCommentID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CommentContent" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="BSDATAModel.FK_OrderComment_Order" FromRole="OrderComment" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ProductID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="Amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ActualAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="BSDATAModel.FK_OrderItem_Order" FromRole="OrderItem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="OrderStatusID" />
+          </Key>
+          <Property Name="OrderStatusID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OrderStatusDefCN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="BSDATAModel.FK_Order_OrderStatus" FromRole="OrderStatus" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Order_OrderStatus">
+          <End Type="BSDATAModel.OrderStatus" Role="OrderStatus" Multiplicity="1" />
+          <End Type="BSDATAModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderStatus">
+              <PropertyRef Name="OrderStatusID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="OrderStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderComment_Order">
+          <End Type="BSDATAModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="BSDATAModel.OrderComment" Role="OrderComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderComment">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_Order">
+          <End Type="BSDATAModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="BSDATAModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1014,81 +1010,6 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Discription" ColumnName="Discription" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order">
-            <EntityTypeMapping TypeName="BSDATAModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserAddressID" ColumnName="UserAddressID" />
-                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
-                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
-                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
-                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
-                <ScalarProperty Name="PayStatusID" ColumnName="PayStatusID" />
-                <ScalarProperty Name="OrderMemo" ColumnName="OrderMemo" />
-                <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
-                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderBook">
-            <EntityTypeMapping TypeName="BSDATAModel.OrderBook">
-              <MappingFragment StoreEntitySet="OrderBook">
-                <ScalarProperty Name="OrderBookID" ColumnName="OrderBookID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserAddressID" ColumnName="UserAddressID" />
-                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
-                <ScalarProperty Name="OrderMemo" ColumnName="OrderMemo" />
-                <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
-                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderComment">
-            <EntityTypeMapping TypeName="BSDATAModel.OrderComment">
-              <MappingFragment StoreEntitySet="OrderComment">
-                <ScalarProperty Name="OrderCommentID" ColumnName="OrderCommentID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="CommentContent" ColumnName="CommentContent" />
-                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderItem">
-            <EntityTypeMapping TypeName="BSDATAModel.OrderItem">
-              <MappingFragment StoreEntitySet="OrderItem">
-                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
-                <ScalarProperty Name="PayStatusID" ColumnName="PayStatusID" />
-                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdatDate" ColumnName="UpdatDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderStatus">
-            <EntityTypeMapping TypeName="BSDATAModel.OrderStatus">
-              <MappingFragment StoreEntitySet="OrderStatus">
-                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
-                <ScalarProperty Name="OrderStatusDefCN" ColumnName="OrderStatusDefCN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1244,6 +1165,79 @@
                 <ScalarProperty Name="ObjectParm1" ColumnName="ObjectParm1" />
                 <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
                 <ScalarProperty Name="SeqID" ColumnName="SeqID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="BSDATAModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
+                <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
+                <ScalarProperty Name="OrderMemo" ColumnName="OrderMemo" />
+                <ScalarProperty Name="PayStatusID" ColumnName="PayStatusID" />
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+                <ScalarProperty Name="PaymentAmount" ColumnName="PaymentAmount" />
+                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="UserAddressID" ColumnName="UserAddressID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OrderNo" ColumnName="OrderNo" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderBook">
+            <EntityTypeMapping TypeName="BSDATAModel.OrderBook">
+              <MappingFragment StoreEntitySet="OrderBook">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
+                <ScalarProperty Name="ServiceDate" ColumnName="ServiceDate" />
+                <ScalarProperty Name="OrderMemo" ColumnName="OrderMemo" />
+                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OrderBookID" ColumnName="OrderBookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderComment">
+            <EntityTypeMapping TypeName="BSDATAModel.OrderComment">
+              <MappingFragment StoreEntitySet="OrderComment">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
+                <ScalarProperty Name="CommentContent" ColumnName="CommentContent" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderCommentID" ColumnName="OrderCommentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItem">
+            <EntityTypeMapping TypeName="BSDATAModel.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="UpdatDate" ColumnName="UpdatDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
+                <ScalarProperty Name="ActualAmount" ColumnName="ActualAmount" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatus">
+            <EntityTypeMapping TypeName="BSDATAModel.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="OrderStatusDefCN" ColumnName="OrderStatusDefCN" />
+                <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

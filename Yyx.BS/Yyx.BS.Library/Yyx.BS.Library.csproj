@@ -106,6 +106,10 @@
       <Project>{88c3fc40-fd6b-4bb2-8b18-d680e23965c8}</Project>
       <Name>Yyx.BS.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Yyx.BS.Utils\Yyx.BS.Utils.csproj">
+      <Project>{63478111-5dc4-4ff5-a2e3-3b08d3afab64}</Project>
+      <Name>Yyx.BS.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

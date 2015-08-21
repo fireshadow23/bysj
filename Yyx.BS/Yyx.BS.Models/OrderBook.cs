@@ -16,9 +16,8 @@ namespace Yyx.BS.Models
     {
         public string OrderBookID { get; set; }
         public string UserID { get; set; }
-        public string UserAddressID { get; set; }
-        public string StoreID { get; set; }
         public string ProductID { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public decimal ActualAmount { get; set; }
         public string OrderMemo { get; set; }

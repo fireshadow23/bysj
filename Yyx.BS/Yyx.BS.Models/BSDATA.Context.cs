@@ -28,11 +28,6 @@ namespace Yyx.BS.Models
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<AddressLibrary> AddressLibrary { get; set; }
         public virtual DbSet<Balance> Balance { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
-        public virtual DbSet<OrderBook> OrderBook { get; set; }
-        public virtual DbSet<OrderComment> OrderComment { get; set; }
-        public virtual DbSet<OrderItem> OrderItem { get; set; }
-        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
         public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<PaymentType> PaymentType { get; set; }
         public virtual DbSet<PayStatus> PayStatus { get; set; }
@@ -44,5 +39,10 @@ namespace Yyx.BS.Models
         public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<StoreOperator> StoreOperator { get; set; }
         public virtual DbSet<Seq> Seq { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderBook> OrderBook { get; set; }
+        public virtual DbSet<OrderComment> OrderComment { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
     }
 }

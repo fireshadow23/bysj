@@ -24,6 +24,7 @@ namespace Yyx.BS.Models
         public string OrderNo { get; set; }
         public string UserID { get; set; }
         public string UserAddressID { get; set; }
+        public string StoreID { get; set; }
         public Nullable<decimal> OrderAmount { get; set; }
         public decimal ActualAmount { get; set; }
         public decimal PaymentAmount { get; set; }
