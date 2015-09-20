@@ -20,6 +20,8 @@ namespace Yyx.BS.Models
         public string City { get; set; }
         public string Area { get; set; }
         public string Street { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactName { get; set; }
         public Nullable<double> Longitude { get; set; }
         public Nullable<double> Latitude { get; set; }
         public bool DelStatus { get; set; }

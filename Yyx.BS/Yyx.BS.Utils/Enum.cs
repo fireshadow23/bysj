@@ -29,4 +29,14 @@ namespace Yyx.BS.Utils
         [Description("出错了")]
         Error
     }
+
+    public enum PaymentTypeEnum
+    {
+        [Description("账户")]
+        AccountPay,
+        [Description("支付宝")]
+        Alipay,
+        [Description("微信")]
+        WeChatPay
+    }
 }

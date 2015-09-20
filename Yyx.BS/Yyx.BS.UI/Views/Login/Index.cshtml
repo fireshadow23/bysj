@@ -13,18 +13,17 @@
 }
 
 <div class="container">
-    <form class="form-signin" action="/Home/Index" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    <form name="mobilePswLoginForm" class="form-signin" action="/Login/UserLogin" method="post">
+        <h2 class="form-signin-heading">会员登录</h2>
+        <label for="inputMobile" class="sr-only">手机</label>
+        <input type="tel" id="inputMobile" class="form-control" value="13695035321" maxlength="11" name="mobile" placeholder="手机" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" value="123456" name="password" placeholder="密码" required>
+        <label for="inputCode" class="sr-only">验证码</label>
+        <input type="text" id="inputCode" class="form-control" maxlength="4" name="imageCode" placeholder="验证码" required>
+        <img id="ImageCode" class="reset_captcha_img" src="">
+        <a id="btnImageCode" class="btn-link reset_captcha_refresh">看不清？换一张</a>
+        <button id="mobilePswBtn" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <label class="ftx24"><a href="/Register/">免费注册</a></label>
     </form>
-
-</div> <!-- /container -->
+</div>

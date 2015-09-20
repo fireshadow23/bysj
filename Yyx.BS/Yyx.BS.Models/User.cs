@@ -23,14 +23,15 @@ namespace Yyx.BS.Models
         public string AccountID { get; set; }
         public string UserName { get; set; }
         public string RealName { get; set; }
+        public string Gender { get; set; }
         public string HeadImagePath { get; set; }
         public string CellPhone { get; set; }
+        public string PassWord { get; set; }
         public string Email { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }
         public bool DelStatus { get; set; }
         public System.DateTime CreateDate { get; set; }
         public System.DateTime UpdateDate { get; set; }
-        public string PassWord { get; set; }
     
         public virtual Account Account { get; set; }
         public virtual ICollection<UserAddress> UserAddress { get; set; }

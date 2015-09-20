@@ -1,0 +1,220 @@
+﻿@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using eModel = Yyx.BS.Models;
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["usercenter"], function (payment) {
+                payment.initIndex();
+            });
+        });
+    </script>
+    <style>
+        body {
+            padding-bottom: 40px;
+            padding-top: 60px;
+        }
+
+        .windows, .recharge, .balance {
+            display: none;
+        }
+    </style>
+
+}
+
+@Html.Partial("_HeaderPartial");
+
+@{
+    eModel.User user = ViewBag.User;
+}
+<div class="col-md-8 col-md-push-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            个人信息
+            <input type="button" class="btn-warning" id="btnEdit" value="编辑" />
+            <input type="button" class="btn-primary" id="btnSave" value="保存" />
+        </div>
+        <div class="row">
+            <fieldset disabled>
+                <div class="col-md-3 col-md-push-9">
+                    <div>
+                        <a id="userheadclick">
+                            <img src="@user.HeadImagePath" alt="用户头像" id="userhead" width="160" height="160" class="img-thumbnail">
+                        </a>
+                        <form method="POST" action="/UserCenter/UpdateUserHeadImg/" id="update-user-head-form" enctype="multipart/form-data">
+                            <input type="file" accept=".JPG,.JPEG,.GIF,.PNG,.BMP" name="userheadfile" id="userheadfile" value="" />
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-pull-3">
+                    <form name="updateUserInfo" action="/UserCenter/UpdateUserInfo" method="post">
+                        <input type="hidden" name="HeadImagePath" value="@user.HeadImagePath" />
+                        <div class="input-group">
+                            <span class="input-group-addon">用户名：</span>
+                            <input class="form-control" size="16" type="text" name="UserName" value="@user.UserName">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">真实姓名：</span>
+                            <input class="form-control" size="16" type="text" name="RealName" value="@user.RealName">
+                        </div>
+                        <div>
+                            <span class="input-group-addon" style="text-align:left;">
+                                * 性别：
+                                <input id="gender1" type="radio" name="Gender" value="男">男
+                                <input id="gender2" type="radio" name="Gender" value="女">女
+                            </span>
+                            <input id="Gender" type="hidden" value="@user.Gender" />
+                        </div>
+                        <div class="input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input" data-link-format="yyyy-mm-dd">
+                            <span class="input-group-addon">生日：</span>
+                            <input class="form-control" size="16" type="text" value="@user.Birthday" readonly>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                        <input type="hidden" id="dtp_input" name="Birthday" value="@user.Birthday.GetValueOrDefault()" />
+                        <div class="input-group">
+                            <span class="input-group-addon">邮箱：</span>
+                            <input class="form-control" size="16" type="email" name="Email" value="@user.Email">
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            账户信息
+            <input type="button" class="btn-success" id="btnRecharge" value="+充值" />
+        </div>
+        <div class="panel-body">
+            <span>账户余额：￥</span>
+            <span id="userAccount">@ViewBag.UserAccount</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="button" class="btn-info" id="btnBalance" value="交易记录" />
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            服务地址
+            <input type="button" class="btn-success" id="btnAddAddr" value="+新增" />
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="15%">联系人</th>
+                    <th width="15%">电话/手机</th>
+                    <th width="50%">联系人地址</th>
+                    <th width="20%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    List<eModel.UserAddress> addrs = ViewBag.UserAddressList;
+                    foreach (var addr in addrs)
+                    {
+                        var useraddr = addr.Province + addr.City + addr.Area + addr.Street;
+                        <tr>
+                            <td>@addr.ContactName</td>
+                            <td>@addr.ContactPhone</td>
+                            <td>@useraddr</td>
+                            <td>
+                                <input type="hidden" name="addressId" value="@addr.UserAddressID" />
+                                <input type="hidden" name="province" value="@addr.Province" />
+                                <input type="hidden" name="city" value="@addr.City" />
+                                <input type="hidden" name="area" value="@addr.Area" />
+                                <input type="hidden" name="street" value="@addr.Street" />
+                                <a href="javascript:void(0);" class="btn-warning modifyAddr">修改</a>
+                                <a href="javascript:void(0);" class="btn-danger delAddr">删除</a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="windows">
+    <div class="panel panel-default">
+        <div class="panel-heading">服务地址新增/编辑</div>
+        <form name="modifyAdderss" action="/UserCenter/ModifyAddress" method="post">
+            <div class="input-group">
+                <span class="input-group-addon">联系姓名：</span>
+                <input class="form-control" size="16" type="text" name="ContactName" value="">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">联系电话：</span>
+                <input class="form-control" size="16" type="text" name="ContactPhone" value="">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">联系地址:</span>
+                <select name="Province" id="province" class="form-control">
+                    <option value="福建省">福建省</option>
+                </select>
+                <select name="City" id="city" class="form-control">
+                    <option value="厦门市">厦门市</option>
+                </select>
+                <select name="Area" id="area" class="form-control">
+                    <option value="思明区">思明区</option>
+                    <option value="湖里区">湖里区</option>
+                    <option value="集美区">集美区</option>
+                    <option value="海沧区">海沧区</option>
+                    <option value="同安区">同安区</option>
+                    <option value="翔安区">翔安区</option>
+                </select>
+                <input type="text" class="form-control" name="Street" value="" placeholder="街道，小区，门牌">
+            </div>
+            <input type="hidden" name="AddressID" />
+            <div style="text-align:center;">
+                <input type="submit" class="btn-primary" value="保存" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="recharge">
+    <div class="panel panel-default">
+        <form name="Recharge" action="/UserCenter/Recharge" method="post">
+            <div class="panel-heading">账户充值</div>
+            <div class="input-group">
+                <span class="input-group-addon">充值金额：</span>
+                <input class="form-control" id="rechargeAmount" size="16" type="text" name="amount" value="">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">支付方式：</span>
+                <input type="text" id="PaymentType" class="form-control" aria-label="..." readonly>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择<span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a href="#" class="paymenttype">支付宝</a></li>
+                        <li><a href="#" class="paymenttype">微信</a></li>
+                        <li><a href="#" class="paymenttype">银联</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input type="hidden" value="" />
+            </div>
+            <div style="text-align:center;">
+                <input type="submit" class="btn-primary" value="保存" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="balance">
+    <div class="panel panel-default" style="width: 500px;">
+        <div class="panel-heading">账户交易记录</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>交易时间</th>
+                    <th>交易金额</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody id="balancelist"></tbody>
+        </table>
+    </div>
+</div>

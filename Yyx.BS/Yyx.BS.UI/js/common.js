@@ -15,18 +15,19 @@ requirejs.config({
 
         //***** lib *** //
         jquery: staticUrl + 'lib/jquery-1.9.1',
-        
+
         //mustache
         mustache: staticUrl + 'lib/mustache/mustache',
         lui: staticUrl + 'lib/mustache/lui',
 
         //layer
-        layer: staticUrl + 'lib/jquery.layer/layer.min',
+        layer: staticUrl + 'lib/jquery.layer/layer',
         layerExt: staticUrl + 'lib/jquery.layer/extend/layer.ext',
 
         //jquery
         jqpaging: staticUrl + "lib/jquery/jquery.pagination",
-        jqdatetimepicker: staticUrl + 'lib/jquery/jquery.datetimepicker',
+        jqdatetimepicker: staticUrl + 'lib/bootstrap-datetimepicker/bootstrap-datetimepicker',
+        jqdatetimepickerlg: staticUrl + 'lib/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN',
         jqform: staticUrl + 'lib/jquery/jquery.form',
         jqregx: staticUrl + 'lib/jquery/jquery.regx',
         jqcookie: staticUrl + 'lib/jquery/jquery.cookie',
@@ -34,9 +35,19 @@ requirejs.config({
         //bootstrap
         bootstrap: staticUrl + 'lib/bootstrap/bootstrap',
 
-        //***** app *** //
-        //common: staticUrl + 'app/common',
+        //json
+        json: staticUrl + 'lib/json/json2',
 
+        //angularjs
+        angularjs: staticUrl + 'lib/angularjs/angular-1.4.3',
+
+        //***** app *** //
+        login: staticUrl + 'app/login',
+        register: staticUrl + 'app/register',
+        home: staticUrl + 'app/home',
+        payment: staticUrl + 'app/payment',
+        usercenter: staticUrl + 'app/usercenter',
+        store: staticUrl + 'app/store',
 
         //***** utils *** //
         tmpconfig: staticUrl + 'utils/tmpconfig'
@@ -94,4 +105,4 @@ requirejs.onError = function (err) {
     //   throw err;
 };
 
-require(['common'])   
+require(['common'])

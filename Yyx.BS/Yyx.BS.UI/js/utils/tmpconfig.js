@@ -3,30 +3,26 @@
  ***************************/
 
 ; (function () {
-    if (typeof xyj === 'undefined' || xyj == null) {
-        xyj = {};
+    if (typeof yyx === 'undefined' || yyx == null) {
+        yyx = {};
     }
 
     //todo:版本管理统一改为hash文件名
-    xyj.templates = {
+    yyx.templates = {
         //order
         orderDetail: {
-            version: '?_v=2015010603',
+            version: '?_v=2015090801',
             path: "/tmpl/userCenter/orderDetail.html"
         },
-        orderInfo: {
-            version: '?_v=2014120801',
-            path: "/tmpl/userCenter/orderInfo.html"
-        },
-        paymentDetail: {
-            version: '?_v=2014120801',
-            path: "/tmpl/userCenter/paymentDetail.html"
+        orderList: {
+            version: '?_v=2015090801',
+            path: "/tmpl/store/orderList.html"
         }
     }
 
-    for (var k in xyj.templates) {
+    for (var k in yyx.templates) {
         //扩展
-        var _obj = xyj.templates[k];
+        var _obj = yyx.templates[k];
         _obj.fullpath = _obj.path + _obj.version;
     }
 })();

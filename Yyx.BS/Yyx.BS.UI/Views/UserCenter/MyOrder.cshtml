@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using eModel = Yyx.BS.Models;
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["usercenter"], function (payment) {
+                payment.initMyOrder();
+            });
+        });
+    </script>
+    <style>
+        body {
+            padding-bottom: 40px;
+            padding-top: 60px;
+        }
+
+        .body_section {
+            width: 1180px;
+            margin: 0 auto;
+        }
+
+        .page {
+            text-align: center;
+            width: 100%;
+        }
+
+            .page .page_ul {
+                margin: 25px 0 25px 0;
+                *margin: 25px 0 25px 110px;
+                display: inline-block;
+                font-size: 14px;
+                height: 32px;
+            }
+
+            .page .current, .page .current.prev, .page .current.next {
+                color: #c5c5c5;
+                cursor: default;
+            }
+
+            .page .prev, .page .next {
+                width: auto;
+                padding: 0 10px;
+            }
+
+            .page a, .page span {
+                display: block;
+                float: left;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                border-radius: 4px;
+                background: #f5f5f5;
+                border: 1px solid #ccc;
+                box-shadow: 2px 2px 2px #eee;
+                margin-right: 6px;
+            }
+
+        .table thead tr td {
+            vertical-align: middle;
+        }
+
+        .windows {
+            display: none;
+        }
+    </style>
+}
+
+@Html.Partial("_HeaderPartial");
+<div class="col-md-8 col-md-push-2">
+    <div id="userOrderList"></div>
+    <div class="page body_section">
+        <div class="page_ul" id="Pagination"></div>
+    </div>
+</div>
+<div class="windows">
+    <div class="panel panel-default" id="showComment" style="width:500px;">
+        <div class="panel-heading">查看评价</div>
+        <div class="panel-body" id="CommentContent">
+
+        </div>
+    </div>
+    <div class="panel panel-default" id="commentOrder">
+        <div class="panel-heading">评价订单</div>
+        <form name="modifyAdderss" action="/UserCenter/CommentOrder" method="post">
+            <div class="input-group">
+                <textarea name="CommentContent" style="width:500px;" class="form-control" rows="3" placeholder="请对我们的产品和服务进行评价......"></textarea>
+            </div>
+            <input type="hidden" name="OrderID" />
+            <div style="text-align:center;">
+                <input type="submit" class="btn-primary" value="保存" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using eModel = Yyx.BS.Models;
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["home"], function (home) {
+                home.initDetail();
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" href="/css/app/home.css" />
+}
+
+@Html.Partial("_HeaderPartial");
+
+@{
+    eModel.Product product = ViewBag.Product;
+    var id = @product.ProductID;
+    <div class="row featurette" style="padding-top:30px">
+        @if (product != null)
+        {
+            <div class="col-md-8 col-md-push-4">
+                <input name="ProductID" type="hidden" value="@product.ProductID" />
+                <h2 class="featurette-heading">@product.ProductName</h2>
+                <h4 class="text-left" style="color:red">￥@product.Price</h4>
+                <p class="lead" style="height:80px;">@product.Discription</p>
+                <div class="input-group col-md-4">
+                    <span class="input-group-btn">
+                        <button id="minusQuantity" class="btn btn-default" type="button">-</button>
+                    </span>
+                    <input name="Quantity" type="text" class="form-control" value="1">
+                    <span class="input-group-btn">
+                        <button id="plusQuantity" class="btn btn-default" type="button">+</button>
+                    </span>
+                </div><!-- /input-group -->
+                <div class="col-md-4">
+                    <br />
+                    <a class="btn btn-default" id="orderPayment" href="#" role="button">立即购买</a>
+                    <a class="btn btn-default" id="addOrderBook" href="#" role="button">添加购物车</a>
+                </div>
+            </div>
+            <div class="col-md-4 col-md-pull-8">
+                <img class="featurette-image img-responsive" style="margin-left:auto;display:block;" width="300" height="300" src="~/img/@id/@id 430x430.jpg" alt="@product.ProductName">
+            </div>
+        }
+    </div>
+    <hr class="featurette-divider">
+    <div class="col-md-6 col-md-offset-1">
+        @for (int i = 1; i < 20; i++)
+        {
+            string path = System.AppDomain.CurrentDomain.BaseDirectory + "img\\" + id + "\\" + id + " " + i + ".jpg";
+            if (File.Exists(path))
+            {
+                string pt = "/img/" + id + "/" + id + " " + i + ".jpg";
+                <img src="@pt">
+            }
+            else
+            {
+                break;
+            }
+        }
+
+    </div>
+}

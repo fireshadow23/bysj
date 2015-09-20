@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2a29517cbd5d4bb79ef6a2fcdbbbac40" Name="Diagram1" ZoomLevel="33">
+      <Diagram DiagramId="2a29517cbd5d4bb79ef6a2fcdbbbac40" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="BSDATAModel.Account" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BSDATAModel.AddressLibrary" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BSDATAModel.Balance" Width="1.5" PointX="10" PointY="1.375" IsExpanded="true" />
@@ -15,17 +15,13 @@
         <EntityTypeShape EntityType="BSDATAModel.ProductCategory" Width="1.5" PointX="7.75" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="BSDATAModel.Store" Width="1.5" PointX="10" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BSDATAModel.StoreProduct" Width="1.5" PointX="12.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BSDATAModel.User" Width="1.5" PointX="10" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BSDATAModel.UserAddress" Width="1.5" PointX="12.25" PointY="9.25" IsExpanded="true" />
         <AssociationConnector Association="BSDATAModel.FK_Balance_Account" ManuallyRouted="false" />
         <AssociationConnector Association="BSDATAModel.FK_Store_Account" ManuallyRouted="false" />
-        <AssociationConnector Association="BSDATAModel.FK_User_Account" ManuallyRouted="false" />
         <AssociationConnector Association="BSDATAModel.FK_Payment_PaymentType" ManuallyRouted="false" />
         <AssociationConnector Association="BSDATAModel.FK_Payment_PayStatus" ManuallyRouted="false" />
         <AssociationConnector Association="BSDATAModel.FK_Product_ProductCategory" ManuallyRouted="false" />
         <AssociationConnector Association="BSDATAModel.FK_StoreProduct_Product" ManuallyRouted="false" />
         <AssociationConnector Association="BSDATAModel.FK_StoreProduct_Store" ManuallyRouted="false" />
-        <AssociationConnector Association="BSDATAModel.FK_UserAddress_User" ManuallyRouted="false" />
         <EntityTypeShape EntityType="BSDATAModel.StoreOperator" Width="1.5" PointX="12.25" PointY="14.125" />
         <AssociationConnector Association="BSDATAModel.FK_StoreOperator_Store" />
         <EntityTypeShape EntityType="BSDATAModel.Seq" Width="1.5" PointX="0.75" PointY="14.75" />
@@ -37,6 +33,10 @@
         <AssociationConnector Association="BSDATAModel.FK_Order_OrderStatus" />
         <AssociationConnector Association="BSDATAModel.FK_OrderComment_Order" />
         <AssociationConnector Association="BSDATAModel.FK_OrderItem_Order" />
+        <EntityTypeShape EntityType="BSDATAModel.UserAddress" Width="1.5" PointX="11.125" PointY="17.625" />
+        <EntityTypeShape EntityType="BSDATAModel.User" Width="1.5" PointX="10" PointY="22.125" />
+        <AssociationConnector Association="BSDATAModel.FK_User_Account" />
+        <AssociationConnector Association="BSDATAModel.FK_UserAddress_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Yyx.BS.Models;
 
@@ -21,10 +22,10 @@ namespace Yyx.BS.Library.Services
         public string SetID<T>(T t)
         {
             string id = string.Empty;
-            string tName = t.GetType().FullName;
+            string tName = t.GetType().Name;
             if (true)
             {
-                Seq seq = db.Seq.First(o => o.ObjectID == tName.ToString());
+                Seq seq = db.Seq.Where(o => o.ObjectID == tName.ToString()).FirstOrDefault();
                 if (seq != null)
                 {
                     seq.CurrentValue = seq.CurrentValue + 1;
@@ -58,6 +59,17 @@ namespace Yyx.BS.Library.Services
                 }
             }
             return prarm;
+        }
+
+        public static string Id2No(string id)
+        {
+            id = Regex.Replace(id, "[a-zA-Z]+", "");//去除字母
+
+            uint a = uint.Parse(id) ^ 0x8fffffff;
+            uint b = uint.Parse(id) & 0x7777777f;
+
+            uint x = a * 7100390 + b;
+            return x.ToString("0000000000");
         }
     }
 }

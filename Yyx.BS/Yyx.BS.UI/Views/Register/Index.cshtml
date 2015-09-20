@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "登录页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["register"]);
+        });
+    </script>
+<link rel="stylesheet" href="/css/app/login.css" />
+}
+<div class="container">
+    <form name="mobileRegisterForm" class="form-signin" action="/Register/UserRegister" method="post">
+        <h2 class="form-signin-heading">会员注册</h2>
+        <label for="inputMobile" class="sr-only">手机</label>
+        <input type="tel" id="inputMobile" class="form-control" maxlength="11" name="mobile" placeholder="手机号码" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="输入密码" required>
+        <label for="inputPasswordAgain" class="sr-only">再次密码</label>
+        <input type="password" id="inputPasswordAgain" class="form-control" name="passwordAgain" placeholder="再次输入密码" required>
+        <label for="inputCode" class="sr-only">验证码</label>
+        <input type="text" id="inputCode" class="form-control" maxlength="4" name="imageCode" placeholder="验证码" required>
+        <img id="ImageCode" class="reset_captcha_img" src="">
+        <a id="btnImageCode" class="btn-link reset_captcha_refresh">看不清？换一张</a>
+        <button id="mobilePswBtn" class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+        <label class="ftx24">我已注册，立即<a href="/Login/">登录</a></label>
+    </form>
+</div> 

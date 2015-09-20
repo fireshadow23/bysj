@@ -20,7 +20,16 @@ namespace Yyx.BS.Library.Services
         {
             using (db = new BSDATAEntities())
             {
-                User user = db.User.First(o => o.UserID == userId && o.DelStatus == false);
+                User user = db.User.Where(o => o.UserID == userId && o.DelStatus == false).FirstOrDefault();
+                return user;
+            }
+        }
+
+        public User GetUserInfoByMobile(string mobile)
+        {
+            using (db = new BSDATAEntities())
+            {
+                User user = db.User.Where(o => o.CellPhone == mobile && o.DelStatus == false).FirstOrDefault();
                 return user;
             }
         }
@@ -79,7 +88,7 @@ namespace Yyx.BS.Library.Services
             message = string.Empty;
             using (db = new BSDATAEntities())
             {
-                User user = db.User.First(o => o.UserID == userId && o.DelStatus == false);
+                User user = db.User.Where(o => o.UserID == userId && o.DelStatus == false).FirstOrDefault();
                 if (user == null)
                 {
                     message = "用户不存在";
@@ -91,6 +100,7 @@ namespace Yyx.BS.Library.Services
                 user.RealName = userInfo.RealName;
                 user.Email = userInfo.Email;
                 user.Birthday = userInfo.Birthday;
+                user.Gender = userInfo.Gender;
                 user.UpdateDate = DateTime.Now;
                 db.User.Attach(user);
                 db.Entry(user).State = EntityState.Modified;
@@ -115,12 +125,12 @@ namespace Yyx.BS.Library.Services
                 List<User> userList = db.User.Where(o => o.CellPhone == mobile && o.DelStatus == false).ToList();
                 if (userList == null || userList.Count == 0)
                 {
-                    message = "用户不存在";
+                    message = "用户或密码有误";
                     return false;
                 }
                 if (userList.First().PassWord != password)
                 {
-                    message = "密码有误";
+                    message = "用户或密码有误";
                     return false;
                 }
                 return true;
@@ -140,7 +150,7 @@ namespace Yyx.BS.Library.Services
             message = string.Empty;
             using (db = new BSDATAEntities())
             {
-                User user = db.User.First(o => o.UserID == userId && o.DelStatus == false);
+                User user = db.User.Where(o => o.UserID == userId && o.DelStatus == false).FirstOrDefault();
                 if (user == null)
                 {
                     message = "用户不存在";
@@ -177,6 +187,15 @@ namespace Yyx.BS.Library.Services
             }
         }
 
+        public UserAddress GetUserAddressByID(string userAddressId)
+        {
+            using (db = new BSDATAEntities())
+            {
+                UserAddress addr = db.UserAddress.Where(o => o.UserAddressID == userAddressId && o.DelStatus == false).FirstOrDefault();
+                return addr;
+            }
+        }
+
         /// <summary>
         /// 添加用户地址
         /// </summary>
@@ -187,7 +206,7 @@ namespace Yyx.BS.Library.Services
         /// <param name="street"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public UserAddress AddUserAddress(string userId, string province, string city, string area, string street, out string message)
+        public UserAddress AddUserAddress(string userId, string province, string city, string area, string street, string contactPhone, string contactName, out string message)
         {
             message = string.Empty;
             using (db = new BSDATAEntities())
@@ -199,6 +218,8 @@ namespace Yyx.BS.Library.Services
                 addr.City = city;
                 addr.Area = area;
                 addr.Street = street;
+                addr.ContactPhone = contactPhone;
+                addr.ContactName = contactName;
                 addr.DelStatus = false;
                 addr.CreateDate = DateTime.Now;
                 addr.UpdateDate = DateTime.Now;
@@ -220,18 +241,20 @@ namespace Yyx.BS.Library.Services
         /// <param name="street"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public UserAddress ModifyAddress(string userId, string userAddressId, string province, string city, string area, string street, out string message)
+        public UserAddress ModifyAddress(string userId, string userAddressId, string contactname, string contactphone, string province, string city, string area, string street, out string message)
         {
             message = string.Empty;
             using (db = new BSDATAEntities())
             {
-                UserAddress addr = db.UserAddress.First(o => o.UserID == userId && o.UserAddressID == userAddressId && o.DelStatus == false);
+                UserAddress addr = db.UserAddress.Where(o => o.UserID == userId && o.UserAddressID == userAddressId && o.DelStatus == false).FirstOrDefault();
                 if (addr == null)
                 {
                     message = "用户不存在";
                     return null;
                 }
 
+                addr.ContactName = contactname;
+                addr.ContactPhone = contactphone;
                 addr.Province = province;
                 addr.City = city;
                 addr.Area = area;
@@ -257,7 +280,7 @@ namespace Yyx.BS.Library.Services
             message = string.Empty;
             using (db = new BSDATAEntities())
             {
-                UserAddress addr = db.UserAddress.First(o => o.UserID == userId && o.UserAddressID == userAddressId && o.DelStatus == false);
+                UserAddress addr = db.UserAddress.Where(o => o.UserID == userId && o.UserAddressID == userAddressId && o.DelStatus == false).FirstOrDefault();
                 if (addr == null)
                 {
                     message = "用户不存在";
@@ -271,6 +294,16 @@ namespace Yyx.BS.Library.Services
                 db.SaveChanges();
 
                 return true;
+            }
+        }
+
+        //获取省市区地址
+        public List<AddressLibrary> GetAddrLib(string addrLibId)
+        {
+            using (db = new BSDATAEntities())
+            {
+                List<AddressLibrary> addrLibs = db.AddressLibrary.Where(o => o.ParentID == addrLibId).ToList();
+                return addrLibs;
             }
         }
 

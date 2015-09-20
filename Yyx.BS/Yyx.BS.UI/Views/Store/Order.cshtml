@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "登录页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["store"], function (store) {
+                store.initOrder();
+            });
+        });
+    </script>
+    <style>
+        body {
+            padding-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .body_section {
+            width: 1180px;
+            margin: 0 auto;
+        }
+
+        .page {
+            text-align: center;
+            width: 100%;
+        }
+
+            .page .page_ul {
+                margin: 25px 0 25px 0;
+                *margin: 25px 0 25px 110px;
+                display: inline-block;
+                font-size: 14px;
+                height: 32px;
+            }
+
+            .page .current, .page .current.prev, .page .current.next {
+                color: #c5c5c5;
+                cursor: default;
+            }
+
+            .page .prev, .page .next {
+                width: auto;
+                padding: 0 10px;
+            }
+
+            .page a, .page span {
+                display: block;
+                float: left;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                border-radius: 4px;
+                background: #f5f5f5;
+                border: 1px solid #ccc;
+                box-shadow: 2px 2px 2px #eee;
+                margin-right: 6px;
+            }
+
+        .table tbody tr td {
+            vertical-align: middle;
+        }
+
+        .windows {
+            display: none;
+        }
+    </style>
+
+}
+
+<div class="col-md-10 col-md-push-1">
+    <div class="panel panel-default">
+        <div class="panel-heading">订单管理</div>
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active"><a id="labpaid" href="#">新订单<span class="badge" id="totalCountPaid">0</span></a></li>
+            <li role="presentation"><a href="#" id="labserversent">已派订单</a></li>
+            <li role="presentation"><a href="#" id="labtrycancel">申请取消<span class="badge" id="totalCountTryCancel">0</span></a></li>
+            <li role="presentation"><a href="#" id="labcomplete">已完成订单</a></li>
+        </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>服务时间</th>
+                    <th>订单号</th>
+                    <th>订单金额</th>
+                    <th>联系人</th>
+                    <th>联系电话</th>
+                    <th>联系地址</th>
+                    <th colspan="4">商品详情</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody id="orderList"></tbody>
+        </table>
+        <div class="page body_section">
+            <div class="page_ul" id="Pagination"></div>
+        </div>
+    </div>
+</div>

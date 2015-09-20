@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "登录页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["store"], function (store) {
+                store.initIndex();
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="/css/app/login.css" />
+}
+
+<div class="container">
+    <form name="mobilePswLoginForm" class="form-signin" action="/Store/StoreLogin" method="post">
+        <h2 class="form-signin-heading">门店会员登录</h2>
+        <label for="inputMobile" class="sr-only">手机</label>
+        <input type="tel" id="inputMobile" class="form-control" value="13888888888" maxlength="11" name="mobile" placeholder="手机" required autofocus>
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input type="password" id="inputPassword" class="form-control" value="123456" name="password" placeholder="密码" required>
+        <button id="mobilePswBtn" class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+</div> 

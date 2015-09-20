@@ -87,6 +87,7 @@
     <Compile Include="OrderStatus.cs">
       <DependentUpon>BSDATA.tt</DependentUpon>
     </Compile>
+    <Compile Include="OrderView.cs" />
     <Compile Include="Payment.cs">
       <DependentUpon>BSDATA.tt</DependentUpon>
     </Compile>

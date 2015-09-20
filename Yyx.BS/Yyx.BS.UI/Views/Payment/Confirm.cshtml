@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using eModel = Yyx.BS.Models;
+
+@section header{
+    <script>
+        require([commonjs], function (common) {
+            require(["payment"], function (payment) {
+                payment.initConfirm();
+            });
+        });
+    </script>
+    <style>
+        body {
+            padding-bottom: 40px;
+            padding-top: 60px;
+        }
+    </style>
+}
+
+@Html.Partial("_HeaderPartial");
+
+<div class="col-md-8 col-md-push-2">
+    <form name="OrderPaid" action="/Payment/PaidOrder" method="post" target="_self">
+        <div class="panel panel-default">
+            <div class="panel-heading">商品详情</div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>产品名称</td>
+                        <td>单价</td>
+                        <td>数量</td>
+                        <td>小计（元）</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        List<eModel.Product> products = ViewBag.ProductList;
+                        List<eModel.OrderBook> books = ViewBag.OrderBookList;
+                        int i = 1;
+                        foreach (var book in books)
+                        {
+                            var product = products.Find(o => o.ProductID == book.ProductID);
+                            var totalAmount = product.Price * book.Quantity;
+                            <tr>
+                                <td>@i++</td>
+                                <td>@product.ProductName</td>
+                                <td>￥@product.Price.ToString("0.00")</td>
+                                <td>@book.Quantity</td>
+                                <td>￥@totalAmount.GetValueOrDefault().ToString("0.00")</td>
+                                <td>
+                                    <input type="hidden" name="OrderBookID" value="@book.OrderBookID" />
+                                    <input type="hidden" name="totalAmount" value="@totalAmount" />
+                                    <button type="button" class="btn btn-danger delbook">删除</button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">服务详情</div>
+            <div>
+                <br />
+                <div class="input-group date form_date col-md-7" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input" data-link-format="yyyy-mm-dd">
+                    <span class="input-group-addon">服务时间：</span>
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+                <input type="hidden" id="dtp_input" name="ServiceDate" value="" />
+            </div>
+            <div>
+                <div class="input-group col-md-9">
+                    <span class="input-group-addon">服务地址：</span>
+                    <input type="text" id="UserAddress" class="form-control" aria-label="..." readonly>
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择<span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            @{
+                                List<eModel.UserAddress> addrs = ViewBag.UserAddressList;
+                                foreach (var item in addrs)
+                                {
+                                    var addr = item.ContactName + " " + item.ContactPhone + " " + item.Province + item.City + item.Area + item.Street;
+                                    <li><a href="#" class="useraddr" data-addrid="@item.UserAddressID">@addr</a></li>
+                                }
+                            }
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input type="hidden" name="UserAddressID" value="" />
+                </div><!-- /input-group -->
+            </div>
+            <div>
+                <div class="input-group col-md-9">
+                    <span class="input-group-addon">支付方式：</span>
+                    <input type="text" class="form-control" value="账户余额" aria-label="..." readonly>
+                    <span class="input-group-addon">账户余额：</span>
+                    <input type="text" id="UserAccount" class="form-control" value="￥@ViewBag.UserAccount" aria-label="..." readonly>
+                </div><!-- /input-group -->
+                <span id="userAccountError" style="color:red;">余额不足</span>
+            </div>
+            <div>
+                <textarea name="OrderMemo" class="form-control" rows="3" placeholder="如有特殊要求请在这里告诉我们......"></textarea>
+            </div>
+        </div>
+        <div style="float:right;">
+            <span>合计:<span style="color:red" id="totalAmount">￥0.00</span></span>
+            <button type="submit" id="btnsubmit" class="btn btn-danger">确认支付</button>
+        </div>
+    </form>
+</div>

@@ -221,6 +221,7 @@
           <Property Name="AccountID" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
           <Property Name="RealName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="20" />
           <Property Name="HeadImagePath" Type="nvarchar" MaxLength="100" />
           <Property Name="CellPhone" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="PassWord" Type="nvarchar" MaxLength="50" />
@@ -240,6 +241,8 @@
           <Property Name="City" Type="nvarchar" MaxLength="20" />
           <Property Name="Area" Type="nvarchar" MaxLength="20" />
           <Property Name="Street" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
           <Property Name="Longitude" Type="float" />
           <Property Name="Latitude" Type="float" />
           <Property Name="DelStatus" Type="bit" Nullable="false" />
@@ -490,7 +493,7 @@
           <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Balance" Relationship="Self.FK_Balance_Account" FromRole="Account" ToRole="Balance" />
           <NavigationProperty Name="Store" Relationship="Self.FK_Store_Account" FromRole="Account" ToRole="Store" />
-          <NavigationProperty Name="User" Relationship="Self.FK_User_Account" FromRole="Account" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="BSDATAModel.FK_User_Account" FromRole="Account" ToRole="User" />
         </EntityType>
         <EntityType Name="AddressLibrary">
           <Key>
@@ -614,42 +617,6 @@
           <NavigationProperty Name="Product" Relationship="Self.FK_StoreProduct_Product" FromRole="StoreProduct" ToRole="Product" />
           <NavigationProperty Name="Store" Relationship="Self.FK_StoreProduct_Store" FromRole="StoreProduct" ToRole="Store" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AccountID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="RealName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HeadImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CellPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Birthday" Type="DateTime" Precision="3" />
-          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Account" Relationship="Self.FK_User_Account" FromRole="User" ToRole="Account" />
-          <NavigationProperty Name="UserAddress" Relationship="Self.FK_UserAddress_User" FromRole="User" ToRole="UserAddress" />
-          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="UserAddress">
-          <Key>
-            <PropertyRef Name="UserAddressID" />
-          </Key>
-          <Property Name="UserAddressID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Province" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Area" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Street" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="Longitude" Type="Double" />
-          <Property Name="Latitude" Type="Double" />
-          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="User" Relationship="Self.FK_UserAddress_User" FromRole="UserAddress" ToRole="User" />
-        </EntityType>
         <Association Name="FK_Balance_Account">
           <End Role="Account" Type="Self.Account" Multiplicity="1" />
           <End Role="Balance" Type="Self.Balance" Multiplicity="*" />
@@ -670,18 +637,6 @@
               <PropertyRef Name="AccountID" />
             </Principal>
             <Dependent Role="Store">
-              <PropertyRef Name="AccountID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_User_Account">
-          <End Role="Account" Type="Self.Account" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Account">
-              <PropertyRef Name="AccountID" />
-            </Principal>
-            <Dependent Role="User">
               <PropertyRef Name="AccountID" />
             </Dependent>
           </ReferentialConstraint>
@@ -746,18 +701,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserAddress_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="UserAddress" Type="Self.UserAddress" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="UserAddress">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="BSDATAEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Account" EntityType="Self.Account" />
           <EntitySet Name="AddressLibrary" EntityType="Self.AddressLibrary" />
@@ -769,8 +712,6 @@
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" />
           <EntitySet Name="Store" EntityType="Self.Store" />
           <EntitySet Name="StoreProduct" EntityType="Self.StoreProduct" />
-          <EntitySet Name="User" EntityType="Self.User" />
-          <EntitySet Name="UserAddress" EntityType="Self.UserAddress" />
           <AssociationSet Name="FK_Balance_Account" Association="Self.FK_Balance_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Balance" EntitySet="Balance" />
@@ -778,10 +719,6 @@
           <AssociationSet Name="FK_Store_Account" Association="Self.FK_Store_Account">
             <End Role="Account" EntitySet="Account" />
             <End Role="Store" EntitySet="Store" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Account" Association="Self.FK_User_Account">
-            <End Role="Account" EntitySet="Account" />
-            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_Payment_PaymentType" Association="Self.FK_Payment_PaymentType">
             <End Role="PaymentType" EntitySet="PaymentType" />
@@ -802,10 +739,6 @@
           <AssociationSet Name="FK_StoreProduct_Store" Association="Self.FK_StoreProduct_Store">
             <End Role="Store" EntitySet="Store" />
             <End Role="StoreProduct" EntitySet="StoreProduct" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserAddress_User" Association="Self.FK_UserAddress_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
           <EntitySet Name="StoreOperator" EntityType="BSDATAModel.StoreOperator" />
           <AssociationSet Name="FK_StoreOperator_Store" Association="BSDATAModel.FK_StoreOperator_Store">
@@ -829,6 +762,16 @@
           <AssociationSet Name="FK_OrderItem_Order" Association="BSDATAModel.FK_OrderItem_Order">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <EntitySet Name="UserAddress" EntityType="BSDATAModel.UserAddress" />
+          <EntitySet Name="User" EntityType="BSDATAModel.User" />
+          <AssociationSet Name="FK_User_Account" Association="BSDATAModel.FK_User_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAddress_User" Association="BSDATAModel.FK_UserAddress_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserAddress" EntitySet="UserAddress" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="StoreOperator">
@@ -975,6 +918,69 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserAddress">
+          <Key>
+            <PropertyRef Name="UserAddressID" />
+          </Key>
+          <Property Name="UserAddressID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="User" Relationship="BSDATAModel.FK_UserAddress_User" FromRole="UserAddress" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="AccountID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RealName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HeadImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CellPhone" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PassWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="3" />
+          <Property Name="DelStatus" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="BSDATAModel.FK_User_Account" FromRole="User" ToRole="Account" />
+          <NavigationProperty Name="UserAddress" Relationship="BSDATAModel.FK_UserAddress_User" FromRole="User" ToRole="UserAddress" />
+        </EntityType>
+        <Association Name="FK_User_Account">
+          <End Type="BSDATAModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="BSDATAModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAddress_User">
+          <End Type="BSDATAModel.User" Role="User" Multiplicity="1" />
+          <End Type="BSDATAModel.UserAddress" Role="UserAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserAddress">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1110,41 +1116,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="BSDATAModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="RealName" ColumnName="RealName" />
-                <ScalarProperty Name="HeadImagePath" ColumnName="HeadImagePath" />
-                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserAddress">
-            <EntityTypeMapping TypeName="BSDATAModel.UserAddress">
-              <MappingFragment StoreEntitySet="UserAddress">
-                <ScalarProperty Name="UserAddressID" ColumnName="UserAddressID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Province" ColumnName="Province" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
-                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="StoreOperator">
             <EntityTypeMapping TypeName="BSDATAModel.StoreOperator">
               <MappingFragment StoreEntitySet="StoreOperator">
@@ -1238,6 +1209,44 @@
               <MappingFragment StoreEntitySet="OrderStatus">
                 <ScalarProperty Name="OrderStatusDefCN" ColumnName="OrderStatusDefCN" />
                 <ScalarProperty Name="OrderStatusID" ColumnName="OrderStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAddress">
+            <EntityTypeMapping TypeName="BSDATAModel.UserAddress">
+              <MappingFragment StoreEntitySet="UserAddress">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserAddressID" ColumnName="UserAddressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="BSDATAModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DelStatus" ColumnName="DelStatus" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="HeadImagePath" ColumnName="HeadImagePath" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccountID" ColumnName="AccountID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

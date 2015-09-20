@@ -35,8 +35,6 @@ namespace Yyx.BS.Models
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
         public virtual DbSet<Store> Store { get; set; }
         public virtual DbSet<StoreProduct> StoreProduct { get; set; }
-        public virtual DbSet<User> User { get; set; }
-        public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<StoreOperator> StoreOperator { get; set; }
         public virtual DbSet<Seq> Seq { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -44,5 +42,7 @@ namespace Yyx.BS.Models
         public virtual DbSet<OrderComment> OrderComment { get; set; }
         public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<OrderStatus> OrderStatus { get; set; }
+        public virtual DbSet<UserAddress> UserAddress { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }
