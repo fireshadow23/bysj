@@ -41,13 +41,15 @@
                     @{
                         List<eModel.Product> products = ViewBag.ProductList;
                         List<eModel.OrderBook> books = ViewBag.OrderBookList;
-                        int i = 1;
+                        int i = 0;
                         foreach (var book in books)
                         {
                             var product = products.Find(o => o.ProductID == book.ProductID);
                             var totalAmount = product.Price * book.Quantity;
+                            i = i + 1;
+                            
                             <tr>
-                                <td>@i++</td>
+                                <td>@i</td>
                                 <td>@product.ProductName</td>
                                 <td>￥@product.Price.ToString("0.00")</td>
                                 <td>@book.Quantity</td>
